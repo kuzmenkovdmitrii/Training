@@ -1,0 +1,31 @@
+﻿@model task14_2.Models.QuadraticEquation
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.TextBoxFor(x => x.A)
+        @Html.TextBoxFor(x => x.B)
+        @Html.TextBoxFor(x => x.C)
+    </div>
+    <div>
+        @Html.LabelFor(x=>x.FirstRoot)
+        @Html.DisplayTextFor(x=>x.FirstRoot)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.SecondRoot) :
+        @Html.DisplayTextFor(x => x.FirstRoot)
+    </div>
+    <div>
+        <input type="submit"/>
+    </div>
+}
+</body>
+</html>
