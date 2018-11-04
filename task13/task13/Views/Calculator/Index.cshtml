@@ -1,0 +1,31 @@
+﻿@model task13.Models.Calculator
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Calculator</title>
+    
+
+</head>
+<body>
+    <div>
+        @ViewBag.PreviousResult
+        @using (Html.BeginForm())
+        {
+            <p>
+                @Html.DisplayTextFor(x => x.FirstNumber) 
+                @Html.DisplayFor(x => x.Operation)
+                @Html.DisplayTextFor(x => x.SecondNumber)
+            </p>
+            <p>
+                @Html.TextBoxFor(x => x.UserResult)
+            </p>
+            @Html.HiddenFor(x => x.Result, new { id = "Result", Value = @Model.Result })
+            <input type="submit" />
+        }
+        <p>
+    </div>
+</body>
+</html>
