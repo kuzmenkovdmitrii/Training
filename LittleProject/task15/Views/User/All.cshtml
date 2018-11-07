@@ -1,0 +1,53 @@
+﻿@model IEnumerable<task15.Models.User>
+
+@{
+    ViewBag.Title = "All";
+    Layout = null;
+}
+
+<div>
+    <table class="table">
+        <tr>
+            <td>
+                Id
+            </td>
+            <td>
+                Name
+            </td>
+            <td>
+                Last name
+            </td>
+            <td>
+                Age
+            </td>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @user.Id
+                </td>
+                <td>
+                    @user.Name
+                </td>
+                <td>
+                    @user.LastName
+                </td>
+                <td>
+                    @user.Age
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = user.Id },
+                        new { @class = "btn btn-primary btn-xs"})
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = user.Id },
+                        new { @class = "btn btn-primary btn-xs"})
+                </td>
+            </tr>
+        }
+    </table>
+    <div>
+        <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'" />
+    </div>
+</div>

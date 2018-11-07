@@ -1,0 +1,97 @@
+﻿@model task15.Models.User
+
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+<div class="div-container">
+    @using (Html.BeginForm("Create","User"))
+    {
+        <div>
+            <div>
+                @Html.LabelFor(x=>x.Name)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.Name)
+                <span>@Html.ValidationMessageFor(x => x.Name)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x=>x.MiddleName)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.MiddleName)
+                <span>@Html.ValidationMessageFor(x => x.MiddleName)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.LastName)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.LastName)
+                <span>@Html.ValidationMessageFor(x => x.LastName)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Email)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.Email)
+                <span>@Html.ValidationMessageFor(x => x.Email)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Password)
+            </div>
+            <div>
+                @Html.PasswordFor(x => x.Password)
+                <span>@Html.ValidationMessageFor(x => x.Password)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.ConfirmPassword)
+            </div>
+            <div>
+                @Html.PasswordFor(x => x.ConfirmPassword)
+                <span>@Html.ValidationMessageFor(x => x.ConfirmPassword)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Age)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.Age)
+                <span>@Html.ValidationMessageFor(x => x.Age)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Phone)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.Phone)
+                <span>@Html.ValidationMessageFor(x => x.Phone)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Address)
+            </div>
+            <div>
+                @Html.TextBoxFor(x => x.Address)
+                <span>@Html.ValidationMessageFor(x => x.Address)</span>
+            </div>
+        </div>
+        <input type="submit" value="Add"/>
+        <span>
+            <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'"/>
+        </span>
+    }
+</div>
