@@ -6,26 +6,11 @@ using System.Web;
 
 namespace task15.Models
 {
-    public interface IRepository : IDisposable
+    
+
+    public class UserRepository : IRepository<User>
     {
-        IEnumerable<User> List();
-        User Get(int id);
-
-        void Create(User user);
-        void Update(User user);
-        void Delete(int id);
-        void Save();
-    }
-
-    public class UserRepository : IRepository
-    {
-        UserContext db = new UserContext();
-
-        //public void Save(User user)
-        //{
-        //    db.Users.Create(user);
-        //    db.SaveChanges();
-        //}
+        ApplicationContext db = new ApplicationContext();
 
         public IEnumerable<User> List()
         {
@@ -49,7 +34,7 @@ namespace task15.Models
 
         public void Delete(int id)
         {
-            User user = db.Users.Find(id);
+            User user = db.Users.FirstOrDefault(x=>x.Id == id);
             if (user != null)
             {
                 db.Users.Remove(user);
