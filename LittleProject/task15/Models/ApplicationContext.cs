@@ -6,11 +6,11 @@ using System.Web;
 
 namespace task15.Models
 {
-    public class UserContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
-        public UserContext()
+        public ApplicationContext()
             : base("ProjectDB")
         {
 

@@ -34,6 +34,8 @@ namespace task15.Models
         [Display(Name = "Password")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "It is not the password")]
         [DataType(DataType.Password)]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "The password must be at least 6 characters long")]
+        [RegularExpression(CustomRegularExpression.PASSWORD_PATTERN , ErrorMessage= "The password must contain at least one letter and a number")]
         public string Password { get; set; }
 
         [Display(Name = "Confirm password")]
@@ -50,11 +52,12 @@ namespace task15.Models
         [Display(Name = "Phone number")]
         [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression(CustomRegularExpression.PHONE_PATTERN, ErrorMessage = "The phone does not follow the format +(xxx)-xx-xxx-xx-xx")]
         public string Phone { get; set; }
 
         [Display(Name = "Address")]
         [Required(ErrorMessage = "Field can't be empty")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "Invalid address length")]
+        [StringLength(50, MinimumLength = 20, ErrorMessage = "Invalid address length")]
         public string Address { get; set; }
     }
 }
