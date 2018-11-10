@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Ninject;
+﻿using System.Web.Mvc;
 using task15.Models;
+using task15.Repository;
 
 namespace task15.Controllers
 {
     public class UserController : Controller
     {
-        IRepository repository = new UserRepository();
+        IUserRepository repository = new UserRepository();
 
         [HttpGet]
         public ActionResult Create()

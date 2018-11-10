@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace task15.Models
+namespace task15.Repository
 {
     public interface IRepository<T> : IDisposable
         where T : class

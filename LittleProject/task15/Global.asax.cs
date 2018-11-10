@@ -7,7 +7,6 @@ using System.Web.Routing;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
-using task15.Util;
 
 namespace task15
 {

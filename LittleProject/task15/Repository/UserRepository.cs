@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using task15.Context;
+using task15.Models;
 
-namespace task15.Models
+namespace task15.Repository
 {
-    
-
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         ApplicationContext db = new ApplicationContext();
 
