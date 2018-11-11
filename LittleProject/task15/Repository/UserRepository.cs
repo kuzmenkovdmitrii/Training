@@ -24,11 +24,13 @@ namespace task15.Repository
         public void Create(User user)
         {
             db.Users.Add(user);
+            Save();
         }
 
         public void Update(User user)
         {
             db.Entry(user).State = EntityState.Modified;
+            Save();
         }
 
         public void Delete(int id)
@@ -37,6 +39,7 @@ namespace task15.Repository
             if (user != null)
             {
                 db.Users.Remove(user);
+                Save();
             }
         }
 

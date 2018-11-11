@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web.Mvc;
 using task15.Models;
 using task15.Repository;
 
@@ -18,14 +21,14 @@ namespace task15.Controllers
         public ActionResult All()
         {
 
-            return View(repository.List());
+            return View(repository.List().OrderBy(x=>x.Id));
         }
 
         [HttpPost]
         public ActionResult Create(User user)
         {
             repository.Create(user);
-            repository.Save();
+
             return View();
         }
 
@@ -41,7 +44,23 @@ namespace task15.Controllers
         public ActionResult Edit(User user)
         {
             repository.Update(user);
-            repository.Save();
+
+            //try
+            //{
+            //    repository.Save();
+            //}
+            //catch (DbEntityValidationException ex)
+            //{
+            //    foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+            //    {
+            //        Response.Write("Object: " + validationError.Entry.Entity.ToString());
+            //        Response.Write("");
+            //        foreach (DbValidationError err in validationError.ValidationErrors)
+            //        {
+            //            Response.Write(err.ErrorMessage + "");
+            //        }
+            //    }
+            //}
 
             return RedirectToAction("Index","Home");
         }
@@ -50,7 +69,6 @@ namespace task15.Controllers
         public ActionResult Delete(int id)
         {
             repository.Delete(id);
-            repository.Save();
             return RedirectToAction("All");
         }
     }
