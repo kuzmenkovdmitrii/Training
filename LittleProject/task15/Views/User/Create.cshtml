@@ -5,93 +5,109 @@
     Layout = null;
 }
 
-<div class="div-container">
-    @using (Html.BeginForm("Create","User"))
-    {
-        <div>
-            <div>
-                @Html.LabelFor(x=>x.Name)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.Name)
-                <span>@Html.ValidationMessageFor(x => x.Name)</span>
-            </div>
+<HTML>
+<head>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" style="background-color: #f5f5f5">
+            <h4 class="text-center">Create user</h4>
+            @using (Html.BeginForm("Create", "User"))
+            {
+                <div class="form-group has-success has-feedback">
+                    @Html.TextBoxFor(x => x.Name, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Name)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.Name)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.MiddleName, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.MiddleName)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.MiddleName)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.LastName, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.LastName)
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.LastName)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Email, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Email)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.Email)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Password, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Password)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.Password)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.ConfirmPassword, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.ConfirmPassword)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.ConfirmPassword)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Age, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Age)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.Age)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Phone, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Phone)
+
+                    })
+
+                    <span>@Html.ValidationMessageFor(x => x.Phone)</span>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Address, new
+                    {
+                        @class = "form-control",
+                        @placeholder = @Html.DisplayNameFor(x => x.Address)
+
+                    })
+                    <span>@Html.ValidationMessageFor(x => x.Address)</span>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-success" value="Add"/>
+                    <span>
+                        <input type="button" class="btn btn-outline-danger" Value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'"/>
+                    </span>
+                </div>
+            }
         </div>
-        <div>
-            <div>
-                @Html.LabelFor(x=>x.MiddleName)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.MiddleName)
-                <span>@Html.ValidationMessageFor(x => x.MiddleName)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.LastName)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.LastName)
-                <span>@Html.ValidationMessageFor(x => x.LastName)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.Email)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.Email)
-                <span>@Html.ValidationMessageFor(x => x.Email)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.Password)
-            </div>
-            <div>
-                @Html.PasswordFor(x => x.Password)
-                <span>@Html.ValidationMessageFor(x => x.Password)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.ConfirmPassword)
-            </div>
-            <div>
-                @Html.PasswordFor(x => x.ConfirmPassword)
-                <span>@Html.ValidationMessageFor(x => x.ConfirmPassword)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.Age)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.Age)
-                <span>@Html.ValidationMessageFor(x => x.Age)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.Phone)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.Phone)
-                <span>@Html.ValidationMessageFor(x => x.Phone)</span>
-            </div>
-        </div>
-        <div>
-            <div>
-                @Html.LabelFor(x => x.Address)
-            </div>
-            <div>
-                @Html.TextBoxFor(x => x.Address)
-                <span>@Html.ValidationMessageFor(x => x.Address)</span>
-            </div>
-        </div>
-        <input type="submit" value="Add"/>
-        <span>
-            <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'"/>
-        </span>
-    }
+    </div>
 </div>
+</body>
+</HTML>

@@ -4,50 +4,50 @@
     ViewBag.Title = "All";
     Layout = null;
 }
+<HTML>
+<head>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
 
-<div>
-    <table class="table">
-        <tr>
-            <td>
-                Id
-            </td>
-            <td>
-                Name
-            </td>
-            <td>
-                Last name
-            </td>
-            <td>
-                Age
-            </td>
-        </tr>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>
-                    @user.Id
-                </td>
-                <td>
-                    @user.Name
-                </td>
-                <td>
-                    @user.LastName
-                </td>
-                <td>
-                    @user.Age
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = user.Id },
-                        new { @class = "btn btn-primary btn-xs"})
-                </td>
-                <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = user.Id },
-                        new { @class = "btn btn-primary btn-xs"})
-                </td>
-            </tr>
-        }
-    </table>
-    <div>
-        <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'" />
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>Last name</td>
+                        <td>Age</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                    </tr>
+                    @foreach (var user in Model)
+                    {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Age</td>
+                        <td>@user.Email</td>
+                        <td>@user.Phone</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new {id = user.Id},
+                                new {@class = "btn btn-primary btn-xs btn btn-outline-info" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", new {id = user.Id},
+                                new {@class = "btn btn-primary btn-xs btn btn-outline-danger" })
+                        </td>
+                    </tr>
+                    }
+                </table>
+                <div>
+                    <input type="button" value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'" />
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</body>
+</HTML>
