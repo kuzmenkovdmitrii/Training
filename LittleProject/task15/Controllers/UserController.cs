@@ -2,6 +2,7 @@
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using task15.Models;
 using task15.Repository;
 
@@ -10,6 +11,17 @@ namespace task15.Controllers
     public class UserController : Controller
     {
         IUserRepository repository = new UserRepository();
+        IMapper mapper;
+
+        public UserController()
+        {
+            var config = new MapperConfiguration(c =>
+            {
+                c.CreateMap<EditModel, User>();
+                c.CreateMap<User, EditModel>();
+            });
+            mapper = config.CreateMapper();
+        }
 
         [HttpGet]
         public ActionResult Create()
@@ -35,16 +47,24 @@ namespace task15.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            User user = repository.Get(id);
+            EditModel edit = mapper.Map<User, EditModel>(repository.Get(id));
 
-            return View(user);
+            return View(edit);
         }
 
         [HttpPost]
-        public ActionResult Edit(User user)
+        public ActionResult Edit(EditModel edit)
         {
-            repository.Update(user);
+            User user = repository.Get(edit.Id);
 
+            user.Name = edit.Name;
+            user.MiddleName = edit.MiddleName;
+            user.LastName = edit.LastName;
+            user.Age = edit.Age;
+            user.Phone = edit.Phone;
+            user.Address = edit.Address;
+
+            repository.Update(user);
             //try
             //{
             //    repository.Save();

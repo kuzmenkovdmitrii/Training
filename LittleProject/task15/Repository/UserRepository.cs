@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using task15.Context;
 using task15.Models;
@@ -30,12 +31,22 @@ namespace task15.Repository
         public void Update(User user)
         {
             db.Entry(user).State = EntityState.Modified;
-            Save();
+            try
+            {
+                Save();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                {
+
+                }
+            }
         }
 
         public void Delete(int id)
         {
-            User user = db.Users.FirstOrDefault(x=>x.Id == id);
+            User user = db.Users.FirstOrDefault(x => x.Id == id);
             if (user != null)
             {
                 db.Users.Remove(user);

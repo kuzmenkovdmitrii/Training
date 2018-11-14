@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Main.cshtml";
 }
 
 <!DOCTYPE html>
@@ -13,8 +13,8 @@
 </head>
 <body class="body">
 <div>
-    <input type="button" class="btn btn-outline-info" value="Create" onclick="location.href = '@Url.Action("Create", "Home")'"/>
-    <input type="button" class="btn btn-outline-info" value="All" onclick="location.href = '@Url.Action("All", "Home")'"/>
+    @*<input type="button" class="btn btn-outline-info" value="Create" onclick="location.href = '@Url.Action("Create", "Home")'"/>
+    <input type="button" class="btn btn-outline-info" value="All" onclick="location.href = '@Url.Action("All", "Home")'"/>*@
 </div>
 </body>
 </html>
