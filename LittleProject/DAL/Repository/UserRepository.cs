@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Common.Entities;
 using DAL.Context;
-using DAL.Domain;
 using DAL.Repository.Interface;
 
 namespace DAL.Repository
@@ -30,7 +30,11 @@ namespace DAL.Repository
 
         public void Update(User item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            User user = db.Users.Find(item.Id);
+
+            db.Entry(user).CurrentValues.SetValues(item);
+            db.Entry(user).State = EntityState.Modified;
+
             Save();
         }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using AutoMapper;
-using BLL.DTO;
-using DAL.Domain;
+using BLL.Infrastructure;
+using Common.Entities;
 using DAL.Repository.Interface;
 
 namespace BLL.Service
@@ -9,40 +8,35 @@ namespace BLL.Service
     public class UserService : IUserService
     {
         IUserRepository userRepository;
-        IMapper mapper;
 
         public UserService(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
-
-            var config = new MapperConfiguration(c =>
-            {
-                c.CreateMap<UserDTO, User>();
-                c.CreateMap<User, UserDTO>();
-            });
-            mapper = config.CreateMapper();
         }
 
-        public IEnumerable<UserDTO> List()
+        public IEnumerable<User> List()
         {
-            return mapper.Map<IEnumerable<User>, List<UserDTO>>(userRepository.List());
+            return userRepository.List();
         }
 
-        public UserDTO Get(int id)
+        public User Get(int id)
         {
-            User user = userRepository.Get(id);
-
-            if (user != null)
+            if (id == null)
             {
-                return mapper.Map<User, UserDTO>(user);
+                throw new ValidationException("Id is empty", "");
             }
 
-            return null;
+            User user = userRepository.Get(id);
+            if (user != null)
+            {
+                return user;
+            }
+
+            throw new ValidationException("User not found", "");
         }
 
-        public void Create(UserDTO userDTO)
+        public void Create(User user)
         {
-            User user = mapper.Map<UserDTO, User>(userDTO);
             userRepository.Create(user);
         }
 
@@ -51,9 +45,8 @@ namespace BLL.Service
             userRepository.Delete(id);
         }
 
-        public void Edit(UserDTO userDTO)
+        public void Edit(User user)
         {
-            User user = mapper.Map<UserDTO, User>(userDTO);
             userRepository.Update(user);
         }
     }

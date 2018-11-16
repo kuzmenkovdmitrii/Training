@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using DAL.Domain;
+using Common.Entities;
 
 namespace DAL.Context
 {

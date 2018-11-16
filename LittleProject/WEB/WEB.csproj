@@ -159,6 +159,10 @@
       <Project>{9d2dd6b9-d3b1-4fc1-9f2d-f6779d1261a4}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{7fa4a58b-7c46-4ee7-88c5-0c47c80a6dd1}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

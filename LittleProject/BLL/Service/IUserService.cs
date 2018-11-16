@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using BLL.DTO;
+using Common.Entities;
 
 namespace BLL.Service
 {
     public interface IUserService
     {
-        IEnumerable<UserDTO> List();
-        UserDTO Get(int id);
+        IEnumerable<User> List();
+        User Get(int id);
 
-        void Create(UserDTO user);
-        void Edit(UserDTO user);
+        void Create(User user);
+        void Edit(User user);
         void Delete(int id);
     }
 }

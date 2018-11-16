@@ -1,4 +1,4 @@
-﻿using DAL.Domain;
+﻿using Common.Entities;
 
 namespace DAL.Repository.Interface
 {

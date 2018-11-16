@@ -8,7 +8,7 @@ namespace task14.Controllers
 {
     public class InformationController : Controller
     {
-        [Route("Info")]
+        //[Route("Info")]
         public ActionResult Index()
         {
             return View();
