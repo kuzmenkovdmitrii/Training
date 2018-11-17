@@ -19,6 +19,15 @@ namespace WEB
                     id = UrlParameter.Optional
                 }
             );
+
+            routes.MapRoute("Search", "UserPage/{query}/{startIndex}",
+                new
+                {
+                    controller = "User",
+                    action = "UserPage",
+                    startIndex = 0,
+                    pageSize = 20
+                });
         }
     }
 }

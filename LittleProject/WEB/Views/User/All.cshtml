@@ -1,53 +1,86 @@
-﻿@model IEnumerable<WEB.Models.User>
-
+﻿@using System.Web.Services.Protocols
 @{
     ViewBag.Title = "All";
     Layout = "~/Views/Shared/_Main.cshtml";
+    AjaxOptions ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "results"
+    };
 }
 <HTML>
 <head>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css"></style>
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        var currentPage;
+
+        function PagerClick(index) {
+            currentPage = index;
+        }
+    </script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <td>Id</td>
-                        <td>Name</td>
-                        <td>Last name</td>
-                        <td>Age</td>
-                        <td>Email</td>
-                        <td>Phone</td>
-                    </tr>
-                    @foreach (var user in Model)
-                    {
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.Name</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Age</td>
-                        <td>@user.Email</td>
-                        <td>@user.Phone</td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new {id = user.Id},
-                                new {@class = "btn btn-primary btn-xs btn btn-outline-info" })
-                        </td>
-                        <td>
-                            @Html.ActionLink("Delete", "Delete", new {id = user.Id},
-                                new {@class = "btn btn-primary btn-xs btn btn-outline-danger" })
-                        </td>
-                    </tr>
-                    }
-                </table>
-                <div>
-                    <input type="button" class="btn btn-outline-secondary" value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action" style="background-color: dimgray; color: aliceblue">
+                    Users
+                </button>
+                <div id="results">
+                    @Html.Action("UsersPage", new {page = 1})
                 </div>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        if (i != 2)
+                        {
+                            <li class="page-item">@Ajax.ActionLink(i.ToString(), "UsersPage", new {page = i, sortOrder = $("#sortOrder")}, ajaxOptions, new{ @class = "page-link"})</li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">@Ajax.ActionLink(i.ToString(), "UsersPage", new { page = i }, ajaxOptions, new { @class = "page-link" })</li>
+                        }
+                    }
+                    @*<li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>*@
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-3">
+            @using (Ajax.BeginForm("UsersPage", "User", ajaxOptions))
+            {
+                <span>
+                    @*@Html.ListBox("Order", new MultiSelectList(new string[] { "Id", "Name", "LastName", "MiddleName"}), new {@class = "custom-select mr-sm-2" })*@
+                    <select class="custom-select mr-sm-2" id="sortOrder" name="sortOrder">
+                        <option selected value="Id">Id</option>
+                        <option value="Name">Name</option>
+                        <option value="MiddleName">MiddleName</option>
+                        <option value="LastName">LastName</option>
+                    </select>
+                </span>
+                <span>
+                    <div>
+                        <input type="submit" class="btn btn-outline-secondary" value="Order" />
+                    </div>
+                    <div>
+                        <input type="button" class="btn btn-outline-secondary" value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'" />
+                    </div>
+                </span>
+            }
         </div>
     </div>
+</div>
 </body>
 </HTML>

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<WEB.Models.User>
+<div>
+    @foreach (var user in Model)
+    {
+        <button type="button" class="list-group-item list-group-item-action">@user.Name @user.LastName</button>
+    }
+</div>

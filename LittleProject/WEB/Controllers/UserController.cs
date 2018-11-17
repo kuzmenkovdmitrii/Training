@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,21 +33,50 @@ namespace WEB.Controllers
         }
 
         [HttpGet]
-        public ActionResult All()
+        public ActionResult All(int page = 1)
         {
-            ICollection<User> users = new List<User>();
-            foreach (var item in userService.List())
+
+            return View();
+        }
+
+        public ActionResult UsersPage(string sortOrder, int page = 1)
+        {
+            int pageSize = 20;
+
+            var users = mapper.Map<IEnumerable<Common.Entities.User>, IEnumerable<User>>(userService.List());
+
+            if (sortOrder == "" || sortOrder == "Id")
             {
-                if (item != null)
-                {
-                    User user = mapper.Map<Common.Entities.User, User>(item);
-                    users.Add(user);
-                }
+                users = users.OrderBy(x => x.Id);
+            }
+            else if (sortOrder == "Name")
+            {
+                users = users.OrderBy(x => x.Name);
+            }
+            else if (sortOrder == "LastName")
+            {
+                users = users.OrderBy(x => x.LastName);
+            }
+            else if (sortOrder == "MiddleName")
+            {
+                users = users.OrderBy(x => x.MiddleName);
             }
 
+            IEnumerable<User> userPage = users.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return View(users.OrderBy(x=>x.Id));
+            return PartialView(userPage.OrderBy(x => x.Id));
         }
+
+        //public ActionResult UsersPage(int page, int startIndex, int pageSize = 20)
+        //{
+        //    var users = mapper.Map<IEnumerable<Common.Entities.User>, IEnumerable<User>>(userService.List());
+
+        //    //IEnumerable<User> userPerPage = users.Skip((page - 1) * pageSize).Take(pageSize);
+
+        //    IEnumerable<User> userPage = users.Skip((page - 1) * pageSize).Take(pageSize);
+
+        //    return PartialView(userPage.OrderBy(x => x.Id));
+        //}
 
         [HttpPost]
         public ActionResult Create(User user)
