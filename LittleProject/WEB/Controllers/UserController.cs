@@ -16,6 +16,7 @@ namespace WEB.Controllers
         public UserController(IUserService userService)
         {
             this.userService = userService;
+
             var config = new MapperConfiguration(c =>
             {
                 c.CreateMap<Common.Entities.User, User>();
@@ -33,12 +34,12 @@ namespace WEB.Controllers
         }
 
         [HttpGet]
-        public ActionResult All(int page = 1)
+        public ActionResult All()
         {
-
             return View();
         }
 
+        [HttpGet]
         public ActionResult UsersPage(string sortOrder, int page = 1)
         {
             int pageSize = 20;
@@ -64,19 +65,8 @@ namespace WEB.Controllers
 
             IEnumerable<User> userPage = users.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return PartialView(userPage.OrderBy(x => x.Id));
+            return PartialView(userPage);
         }
-
-        //public ActionResult UsersPage(int page, int startIndex, int pageSize = 20)
-        //{
-        //    var users = mapper.Map<IEnumerable<Common.Entities.User>, IEnumerable<User>>(userService.List());
-
-        //    //IEnumerable<User> userPerPage = users.Skip((page - 1) * pageSize).Take(pageSize);
-
-        //    IEnumerable<User> userPage = users.Skip((page - 1) * pageSize).Take(pageSize);
-
-        //    return PartialView(userPage.OrderBy(x => x.Id));
-        //}
 
         [HttpPost]
         public ActionResult Create(User user)
@@ -114,23 +104,6 @@ namespace WEB.Controllers
                 user.Phone = edit.Phone;
                 user.Address = edit.Address;
 
-                userService.Edit(mapper.Map<User, Common.Entities.User>(user));
-                //try
-                //{
-                //    repository.Save();
-                //}
-                //catch (DbEntityValidationException ex)
-                //{
-                //    foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
-                //    {
-                //        Response.Write("Object: " + validationError.Entry.Entity.ToString());
-                //        Response.Write("");
-                //        foreach (DbValidationError err in validationError.ValidationErrors)
-                //        {
-                //            Response.Write(err.ErrorMessage + "");
-                //        }
-                //    }
-                //}
                 userService.Edit(mapper.Map<User, Common.Entities.User>(user));
 
                 return RedirectToAction("Index", "Home");

@@ -1,5 +1,4 @@
-﻿@using System.Web.Services.Protocols
-@{
+﻿@{
     ViewBag.Title = "All";
     Layout = "~/Views/Shared/_Main.cshtml";
     AjaxOptions ajaxOptions = new AjaxOptions
@@ -7,25 +6,74 @@
         UpdateTargetId = "results"
     };
 }
-<HTML>
-<head>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <style type="text/css"></style>
-    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript">
-        var currentPage;
+<script>
+    var currentPage;
+    var orderType;
+    var numPages = 6;
 
-        function PagerClick(index) {
-            currentPage = index;
+    function OnSelectionChange(select) {
+        currentPage = 1;
+        RenderControls(currentPage);
+        orderType = select.options[select.selectedIndex].value;
+        $.ajax({
+            url: '@Url.Action("UsersPage", "User")',
+            data: 'page=1&sortOrder=' + orderType,
+            type: 'get',
+            success: function (result) {
+                $('#results').html(result);
+            }
+        });
+    }
+
+    function PaginationChange(page) {
+        currentPage = page;
+        RenderControls(page);
+        $.ajax({
+            url: '@Url.Action("UsersPage", "User")',
+            data: 'page=' + page + '&sortOrder=' + orderType,
+            type: 'get',
+            success: function (result) {
+                $('#results').html(result);
+            }
+        });
+    }
+
+    function RenderControls(page) {
+        currentPage = page;
+
+        var pagingControls = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
+        pagingControls += '<li class="page-item';
+
+        if (currentPage == 1) {
+            pagingControls += ' disabled';
         }
-    </script>
-</head>
 
-<body>
-<div class="container">
+        pagingControls += '"><input type="button" value="Previous" onclick="PaginationChange (' + (currentPage - 1) + ')" class="page-link"></li>';
+
+        for (var i = 1; i <= numPages; i++) {
+            if (i != currentPage) {
+                pagingControls += '<li class="page-item"><input type="button" value="' + i + '" onclick="PaginationChange (' + i + ')" class="page-link"></li>';
+            } else {
+                pagingControls += '<li class="page-item disabled"><input type="button" value="' + i + '" onclick="PaginationChange (' + i + ')" class="page-link"></li>';
+            }
+            
+        }
+
+        pagingControls += '<li class="page-item';
+
+        if (currentPage == numPages) {
+            pagingControls += ' disabled';
+        }
+
+        pagingControls += '"><input type="button" value="Next" onclick="PaginationChange (' + (currentPage + 1) + ')" class="page-link"></li>';
+
+        pagingControls += '</ul></nav>';
+
+        $('#paginationControl').html(pagingControls);
+    }
+</script>
+
+<div class="container" style="margin-bottom: 15px;margin-top:15px">
     <div class="row">
         <div class="col-md-7">
             <div class="list-group">
@@ -33,54 +81,36 @@
                     Users
                 </button>
                 <div id="results">
-                    @Html.Action("UsersPage", new {page = 1})
+                    @Html.Action("UsersPage", new { page = 1 })
                 </div>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    @for (int i = 1; i <= 6; i++)
-                    {
-                        if (i != 2)
-                        {
-                            <li class="page-item">@Ajax.ActionLink(i.ToString(), "UsersPage", new {page = i, sortOrder = $("#sortOrder")}, ajaxOptions, new{ @class = "page-link"})</li>
-                        }
-                        else
-                        {
-                            <li class="page-item disabled">@Ajax.ActionLink(i.ToString(), "UsersPage", new { page = i }, ajaxOptions, new { @class = "page-link" })</li>
-                        }
-                    }
-                    @*<li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>*@
-                </ul>
-            </nav>
+            <div id="paginationControl">
+                <script>RenderControls(1);</script>
+            </div>
         </div>
-        <div class="col-md-3">
-            @using (Ajax.BeginForm("UsersPage", "User", ajaxOptions))
-            {
-                <span>
-                    @*@Html.ListBox("Order", new MultiSelectList(new string[] { "Id", "Name", "LastName", "MiddleName"}), new {@class = "custom-select mr-sm-2" })*@
-                    <select class="custom-select mr-sm-2" id="sortOrder" name="sortOrder">
-                        <option selected value="Id">Id</option>
-                        <option value="Name">Name</option>
-                        <option value="MiddleName">MiddleName</option>
-                        <option value="LastName">LastName</option>
-                    </select>
-                </span>
-                <span>
-                    <div>
-                        <input type="submit" class="btn btn-outline-secondary" value="Order" />
-                    </div>
-                    <div>
-                        <input type="button" class="btn btn-outline-secondary" value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'" />
-                    </div>
-                </span>
-            }
+        <div class="col-md-2">
+            <span>
+                <select class="custom-select mr-sm-2" id="sortOrder" onchange="OnSelectionChange(this)">
+                    <option selected value="Id">Id</option>
+                    <option value="Name">Name</option>
+                    <option value="MiddleName">MiddleName</option>
+                    <option value="LastName">LastName</option>
+                </select>
+            </span>
+            <span class="marginItem">
+                <div style="margin-bottom: 15px;margin-top:15px">
+                    <input type="button" class="btn btn-outline-success btn-block" value="Create" onclick="location.href = '@Url.Action("Create", "User")'" />
+                </div>
+                <div style="margin-bottom: 15px;margin-top:15px">
+                    <input type="button" class="btn btn-outline-primary btn-block" value="Edit" onclick="location.href = '@Url.Action("Edit", "User")'"/>
+                </div>
+                <div style="margin-bottom: 15px;margin-top:15px">
+                    <input type="button" class="btn btn-outline-danger btn-block" value="Delete" onclick="location.href = '@Url.Action("Delete", "User")'"/>
+                </div>
+                <div style="margin-bottom: 15px;margin-top:15px">
+                    <input type="button" class="btn btn-outline-secondary btn-block" value="Cancel" onclick="location.href = '@Url.Action("Index", "Home")'"/>
+                </div>
+            </span>
         </div>
     </div>
 </div>
-</body>
-</HTML>
