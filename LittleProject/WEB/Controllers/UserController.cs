@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Web.Mvc;
 using System.Collections.Generic;
@@ -66,6 +67,12 @@ namespace WEB.Controllers
             IEnumerable<User> userPage = users.Skip((page - 1) * pageSize).Take(pageSize);
 
             return PartialView(userPage);
+        }
+
+        [HttpGet]
+        public int GetNumberOfUsers()
+        {
+            return (int)Math.Ceiling(userService.List().Count() / 20.0);
         }
 
         [HttpPost]
